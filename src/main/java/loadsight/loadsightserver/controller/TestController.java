@@ -1,8 +1,8 @@
 package loadsight.loadsightserver.controller;
 
+import loadsight.loadsightserver.domain.TestEntity;
 import loadsight.loadsightserver.dto.TestRequest;
 import loadsight.loadsightserver.dto.TestResponse;
-import loadsight.loadsightserver.service.LoadTestService;
 import jakarta.validation.Valid;
 import loadsight.loadsightserver.service.TestService;
 import org.springframework.http.HttpStatus;
@@ -30,5 +30,28 @@ public class TestController {
         TestResponse resp = new TestResponse();
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
+
+    @GetMapping()
+    public ResponseEntity<List<TestEntity>> getAllTest() {
+        try {
+            List<TestEntity> result = testService.getAllTest();
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/{testId}")
+    public ResponseEntity<TestEntity> getTest(@PathVariable("testId") Long id) {
+        TestEntity test = testService.getTestById(id);
+        return ResponseEntity.ok(test);
+    }
+
+    @GetMapping("/delete/{testId}")
+    public ResponseEntity<Boolean> deleteTest(@PathVariable("testId") Long id) {
+        testService.deleteTestById(id);
+        return ResponseEntity.ok(true);
+    }
+
 }
 

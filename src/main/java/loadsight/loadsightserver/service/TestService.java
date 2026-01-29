@@ -2,10 +2,13 @@ package loadsight.loadsightserver.service;
 
 import loadsight.loadsightserver.domain.TestEntity;
 import loadsight.loadsightserver.dto.TestRequest;
+import loadsight.loadsightserver.dto.TestResponse;
 import loadsight.loadsightserver.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -35,5 +38,26 @@ public class TestService {
 
         testRepository.save(test);
         return test.getId();
+    }
+
+    @Transactional
+    public List<TestEntity> getAllTest() {
+        List<TestEntity> allTests =  testRepository.getAllTest();
+        return allTests;
+    }
+
+    @Transactional
+    public TestEntity getTestById(Long id) {
+        TestEntity test = testRepository.getTest(id);
+        if (test != null) {
+            return test;
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 test id");
+        }
+    }
+
+    @Transactional
+    public void deleteTestById(Long id) {
+        testRepository.deleteTestById(id);
     }
 }
