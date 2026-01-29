@@ -56,6 +56,4 @@ public class RunEntity extends BaseEntity{
     private String failReason;
 
 
-
-
 }
