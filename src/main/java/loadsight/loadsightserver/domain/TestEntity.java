@@ -1,15 +1,10 @@
 package loadsight.loadsightserver.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Index;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.security.auth.message.AuthStatus;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -35,9 +30,20 @@ public class TestEntity extends BaseEntity{
     private Map<String, Object> specJson;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "json", nullable = false)
-    @Builder.Default
-    private List<String> tags = new ArrayList<>();
+    @Column(columnDefinition = "json")
+    private Map<String, Object> header;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
+    private Map<String, Object> Body;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
+    private Map<String, Object> auth;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private AuthStatus authType;
 
     @Column(nullable = false)
     @Builder.Default

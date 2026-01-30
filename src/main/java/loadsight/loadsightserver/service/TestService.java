@@ -26,15 +26,19 @@ public class TestService {
     public Long save(TestRequest request){
         TestEntity test = new TestEntity();
 
-        Map<String, Object> testMap = new HashMap<>();
-        testMap.put("method", request.getMethod());
-        List<String> testList = new ArrayList<>();
+        Map<String, Object> specMap = new HashMap<>();
+        specMap.put("method", request.getMethod());
+        specMap.put("threads", request.getThreads());
+        specMap.put("totalRequest", request.getTotalRequest());
+        specMap.put("requestInterval", request.getRequestInterval());
 
         test.setName(request.getName());
         test.setDescription(request.getDescriptions());
-        test.setSpecJson(testMap);
-        test.setTags(testList);
+        test.setSpecJson(specMap);
         test.setDeleted(false);
+        test.setBody(request.getData());
+        test.setAuthType(request.getAuthType());
+        test.setAuth(request.getAuth());
 
         testRepository.save(test);
         return test.getId();
