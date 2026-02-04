@@ -1,6 +1,6 @@
 package loadsight.loadsightserver.dto;
 
-import jakarta.security.auth.message.AuthStatus;
+import loadsight.loadsightserver.domain.AuthStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

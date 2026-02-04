@@ -1,7 +1,6 @@
 package loadsight.loadsightserver.domain;
 
 import jakarta.persistence.*;
-import jakarta.security.auth.message.AuthStatus;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
