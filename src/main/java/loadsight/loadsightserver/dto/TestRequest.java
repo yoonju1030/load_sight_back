@@ -41,7 +41,7 @@ public class TestRequest {
     @Max(value = 1_000_000, message = "총 요청수는 최대 100만 회까지 가능합니다")
     private Integer totalRequest;
 
-    @NotBlank(message = "auth 방식은 필수입니다.")
+    @NotNull(message = "auth 방식은 필수입니다.")
     private AuthStatus authType;
 
     private Map<String, Object> auth;

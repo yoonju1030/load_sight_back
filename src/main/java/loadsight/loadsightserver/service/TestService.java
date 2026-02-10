@@ -11,10 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TestService {
@@ -23,7 +20,7 @@ public class TestService {
     TestRepository testRepository;
 
     @Transactional
-    public Long save(TestRequest request){
+    public UUID save(TestRequest request){
         TestEntity test = new TestEntity();
 
         Map<String, Object> specMap = new HashMap<>();
