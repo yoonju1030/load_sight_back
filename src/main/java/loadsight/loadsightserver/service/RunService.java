@@ -17,7 +17,8 @@ public class RunService {
     @Transactional
     public RunEntity startRun(RunRequest request) {
         int testId = request.getTestId();
-        RunEntity createdRun = runRepository.save(testId);
+//        RunEntity createdRun = runRepository.save(testId);
+        RunEntity createdRun = new RunEntity();
         return createdRun;
     }
 

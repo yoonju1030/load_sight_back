@@ -9,14 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.UUID;
+
 @Repository
 public class RunRepository {
 
     @PersistenceContext
     private EntityManager em;
 
-    public RunEntity save(int testId) {
-        TestEntity test = em.find(TestEntity.class, testId);
+    public RunEntity save(TestEntity test) {
         RunEntity runEntity = new RunEntity();
         runEntity.setTest(test);
         runEntity.setRunStatus(RunStatus.CREATED);
