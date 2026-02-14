@@ -10,12 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tests")
 //@CrossOrigin(origins = "*")
 public class TestController {
-    
+
     private final TestService testService;
 
     public TestController(
@@ -26,7 +27,8 @@ public class TestController {
 
     @PostMapping("")
     public ResponseEntity<TestResponse> create(@Valid @RequestBody TestRequest request) {
-        testService.save(request);
+        UUID runUuid = testService.save(request);
+        testService.requestToGenerator(runUuid, request);
         TestResponse resp = new TestResponse();
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }

@@ -47,7 +47,7 @@ public class TestRequest {
     private Map<String, Object> auth;
 
 
-    @Min(value = 0, message = "요청 간격은 0ms 이상이어야 합니다")
+    @Min(value = 1, message = "요청 간격은 1ms 이상이어야 합니다")
     private Integer requestInterval;
 }
 

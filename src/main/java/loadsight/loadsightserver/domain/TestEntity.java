@@ -24,6 +24,9 @@ public class TestEntity extends BaseEntity{
     @Column(length=1000)
     private String description;
 
+    @Column(length=500)
+    private String targetUrl;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json", nullable = false)
     private Map<String, Object> specJson;
