@@ -94,8 +94,12 @@ public class TestService {
 
     @Transactional
     public List<TestEntity> getAllTest() {
-        List<TestEntity> allTests =  testRepository.getAllTest();
-        return allTests;
+        try {
+            List<TestEntity> allTests = testRepository.getAllTest();
+            return allTests;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Transactional
