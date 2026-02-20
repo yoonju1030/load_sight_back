@@ -35,4 +35,12 @@ public class RunRepository {
         run.setRunStatus(RunStatus.STOPPING);
     }
 
+    public void changeRunStatus(UUID runId) {
+        RunEntity run = em.find(RunEntity.class, runId);
+        if (run == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "run not found: " + runId);
+        }
+        run.setRunStatus(RunStatus.STARTING);
+    }
+
 }

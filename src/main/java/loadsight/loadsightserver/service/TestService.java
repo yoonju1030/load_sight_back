@@ -86,6 +86,7 @@ public class TestService {
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
+            runRepository.changeRunStatus(runUuid);
             System.out.println(result);
         } catch (Exception e) {
             throw new RuntimeException(e);
