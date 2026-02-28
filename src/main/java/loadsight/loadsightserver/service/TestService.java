@@ -6,6 +6,8 @@ import loadsight.loadsightserver.domain.RunStatus;
 import loadsight.loadsightserver.domain.TestEntity;
 import loadsight.loadsightserver.dto.TestRequest;
 import loadsight.loadsightserver.dto.TestResponse;
+import loadsight.loadsightserver.dto.TestSummaryDto;
+import loadsight.loadsightserver.mybatis.TestQueryMapper;
 import loadsight.loadsightserver.repository.RunRepository;
 import loadsight.loadsightserver.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class TestService {
     RunRepository runRepository;
     @Autowired
     WebClient webClient;
+    @Autowired
+    TestQueryMapper testQueryMapper;
 
     @Transactional
     public UUID save(TestRequest request){
@@ -116,5 +120,10 @@ public class TestService {
     @Transactional
     public void deleteTestById(Long id) {
         testRepository.deleteTestById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public TestSummaryDto getSummary(Long testId) {
+        return testQueryMapper.findTestSummary(testId);
     }
 }

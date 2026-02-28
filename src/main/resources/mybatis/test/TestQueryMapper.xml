@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="loadsight.loadsightserver.mybatis.TestQueryMapper">
+
+    <select id="findTestSummary" resultType="loadsight.loadsightserver.dto.TestSummaryDto">
+        SELECT
+        t.id        AS testId,
+        t.name      AS name,
+        t.created_at AS createdAt
+        FROM test t
+        WHERE t.id = #{testId}
+    </select>
+
+</mapper>

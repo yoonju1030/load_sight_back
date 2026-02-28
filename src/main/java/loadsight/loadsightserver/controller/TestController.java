@@ -4,6 +4,7 @@ import loadsight.loadsightserver.domain.TestEntity;
 import loadsight.loadsightserver.dto.TestRequest;
 import loadsight.loadsightserver.dto.TestResponse;
 import jakarta.validation.Valid;
+import loadsight.loadsightserver.dto.TestSummaryDto;
 import loadsight.loadsightserver.service.TestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,12 @@ public class TestController {
     public ResponseEntity<Boolean> deleteTest(@PathVariable("testId") Long id) {
         testService.deleteTestById(id);
         return ResponseEntity.ok(true);
+    }
+
+    @GetMapping("/getSummary/{testId}")
+    public  ResponseEntity<TestSummaryDto> getSummaryTest(@PathVariable("testId") Long id) {
+        TestSummaryDto testSummary = testService.getSummary(id);
+        return ResponseEntity.ok(testSummary);
     }
 
 }
