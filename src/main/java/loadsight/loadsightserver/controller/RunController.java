@@ -70,4 +70,10 @@ public class RunController {
         * */
         return ResponseEntity.ok(true);
     }
+
+    @GetMapping("/getStatistics/{runId}")
+    public ResponseEntity<Boolean> getStatistics(@PathVariable("runId") String id) {
+        runService.getStatistics(id);
+        return ResponseEntity.ok(true);
+    }
 }
