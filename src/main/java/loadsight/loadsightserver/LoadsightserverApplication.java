@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = "loadsight.loadsightserver.mybatis")
 public class LoadsightserverApplication {
 
 	public static void main(String[] args) {
