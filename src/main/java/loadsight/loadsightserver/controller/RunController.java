@@ -72,8 +72,8 @@ public class RunController {
     }
 
     @GetMapping("/getStatistics/{runId}")
-    public ResponseEntity<Boolean> getStatistics(@PathVariable("runId") String id) {
-        runService.getStatistics(id);
-        return ResponseEntity.ok(true);
+    public ResponseEntity<Double> getStatistics(@PathVariable("runId") String id) {
+        double successRate = runService.getStatistics(id);
+        return ResponseEntity.ok(successRate);
     }
 }

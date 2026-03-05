@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Service
 public class RunService {
 
@@ -33,9 +37,17 @@ public class RunService {
     }
 
     @Transactional(readOnly = true)
-    public StatisticDto getStatistics(String runId) {
-        StatisticDto runResult = runQueryMapper.getRunStatistics(runId);
-        return runResult;
+    public double getStatistics(String runId) {
+        List<StatisticDto> runResult = runQueryMapper.getRunStatistics(runId);
+        int total = runResult.stream()
+                .filter(Objects::nonNull)
+                .mapToInt(dto -> dto.getCount())
+                .sum();
+        int success = runResult.stream().filter(obj -> obj.getStatus().equals(true))
+                .collect(Collectors.toList())
+                .get(0).getCount();
+        double successRate = (double)success / (double) total;
+        return successRate;
     }
 
 }
