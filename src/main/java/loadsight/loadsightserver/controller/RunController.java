@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import loadsight.loadsightserver.domain.RunEntity;
 import loadsight.loadsightserver.dto.ExistedRunRequest;
 import loadsight.loadsightserver.dto.RunRequest;
+import loadsight.loadsightserver.dto.StatisticResponse;
 import loadsight.loadsightserver.service.RunService;
 import loadsight.loadsightserver.service.TestService;
 import org.springframework.http.ResponseEntity;
@@ -72,8 +73,12 @@ public class RunController {
     }
 
     @GetMapping("/getStatistics/{runId}")
-    public ResponseEntity<Double> getStatistics(@PathVariable("runId") String id) {
-        double successRate = runService.getStatistics(id);
-        return ResponseEntity.ok(successRate);
+    public ResponseEntity<StatisticResponse> getStatistics(@PathVariable("runId") String id) {
+        boolean runStatus = runService.checkRunStatus(id);
+        StatisticResponse statisticResponse = new StatisticResponse();
+        if (runStatus) {
+            statisticResponse = runService.getStatistics(id);
+        }
+        return ResponseEntity.ok(statisticResponse);
     }
 }

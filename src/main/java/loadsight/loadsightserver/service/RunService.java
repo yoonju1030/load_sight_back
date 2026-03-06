@@ -1,9 +1,11 @@
 package loadsight.loadsightserver.service;
 
 import loadsight.loadsightserver.domain.RunEntity;
+import loadsight.loadsightserver.domain.RunStatus;
 import loadsight.loadsightserver.dto.ExistedRunRequest;
 import loadsight.loadsightserver.dto.RunRequest;
 import loadsight.loadsightserver.dto.StatisticDto;
+import loadsight.loadsightserver.dto.StatisticResponse;
 import loadsight.loadsightserver.mybatis.RunQueryMapper;
 import loadsight.loadsightserver.repository.RunRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,8 +40,9 @@ public class RunService {
     }
 
     @Transactional(readOnly = true)
-    public double getStatistics(String runId) {
+    public StatisticResponse getStatistics(String runId) {
         List<StatisticDto> runResult = runQueryMapper.getRunStatistics(runId);
+        StatisticResponse statisticResponse = new StatisticResponse();
         int total = runResult.stream()
                 .filter(Objects::nonNull)
                 .mapToInt(dto -> dto.getCount())
@@ -46,8 +50,28 @@ public class RunService {
         int success = runResult.stream().filter(obj -> obj.getStatus().equals(true))
                 .collect(Collectors.toList())
                 .get(0).getCount();
+        int fail = total - success;
         double successRate = (double)success / (double) total;
-        return successRate;
+        double failRate = (double)fail / (double) total;
+        statisticResponse.setTotalRequests(total);
+        statisticResponse.setSuccessRate(successRate);
+        statisticResponse.setFailRate(failRate);
+        statisticResponse.setSuccess(success);
+        statisticResponse.setFail(fail);
+        int error = runQueryMapper.getErrorCount(runId);
+        statisticResponse.setErrorRate((double)error / (double)total);
+        return statisticResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkRunStatus(String runId) {
+        boolean result = true;
+        RunStatus runStatus = runQueryMapper.getRunStatus(runId);
+        Set<RunStatus> notAllowed = Set.of(RunStatus.CREATED, RunStatus.STARTING, RunStatus.RUNNING);
+        if (notAllowed.contains(runStatus)) {
+            result = false;
+        }
+        return result;
     }
 
 }

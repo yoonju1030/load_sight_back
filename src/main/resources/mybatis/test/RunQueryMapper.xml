@@ -14,4 +14,16 @@
         GROUP BY e.success
     </select>
 
+    <select id="getErrorCount" resultType="int">
+        SELECT count(*)
+        FROM exec
+        WHERE run_id = #{runId} and error is not null
+    </select>
+
+    <select id="getRunStatus" resultType="loadsight.loadsightserver.domain.RunStatus">
+        SELECT run_status
+        FROM runs
+        WHERE id = #{runId}
+    </select>
+
 </mapper>
