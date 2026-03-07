@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,9 +65,10 @@ public class RunService {
     }
 
     @Transactional(readOnly = true)
-    public boolean checkRunStatus(String runId) {
+    public boolean checkRunStatusTemp(String runId) {
         boolean result = true;
-        RunStatus runStatus = runQueryMapper.getRunStatus(runId);
+//        RunStatus runStatus = runQueryMapper.getRunStatus(runId);
+        RunStatus runStatus = runRepository.checkRunStatus(UUID.fromString(runId));
         Set<RunStatus> notAllowed = Set.of(RunStatus.CREATED, RunStatus.STARTING, RunStatus.RUNNING);
         if (notAllowed.contains(runStatus)) {
             result = false;

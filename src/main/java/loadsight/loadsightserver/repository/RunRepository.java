@@ -43,4 +43,9 @@ public class RunRepository {
         run.setRunStatus(RunStatus.STARTING);
     }
 
+    public RunStatus checkRunStatus(UUID runId) {
+        RunEntity run = em.find(RunEntity.class, runId);
+        return run.getRunStatus();
+    }
+
 }
