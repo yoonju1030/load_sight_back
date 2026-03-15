@@ -65,7 +65,7 @@ public class RunService {
     }
 
     @Transactional(readOnly = true)
-    public boolean checkRunStatusTemp(String runId) {
+    public boolean checkRunStatus(String runId) {
         boolean result = true;
 //        RunStatus runStatus = runQueryMapper.getRunStatus(runId);
         RunStatus runStatus = runRepository.checkRunStatus(UUID.fromString(runId));
