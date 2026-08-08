@@ -2,9 +2,9 @@ package loadsight.loadsightserver.domain.loadtest.entity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.*;
-import loadsight.loadsightserver.domain.RunStatus;
 import loadsight.loadsightserver.domain.auth.entity.AppUser;
 import loadsight.loadsightserver.domain.common.BaseTimeEntity;
+import loadsight.loadsightserver.domain.loadtest.enums.RunStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,4 +38,11 @@ public class TestRun extends BaseTimeEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "config_snapshot", nullable = false, columnDefinition = "jsonb")
     private JsonNode configSnapshot;
+
+    public TestRun(TestPlan testPlan, AppUser owner, JsonNode configSnapshot) {
+        this.testPlan = testPlan;
+        this.owner = owner;
+        this.status = RunStatus.CREATED;
+        this.configSnapshot = configSnapshot;
+    }
 }
